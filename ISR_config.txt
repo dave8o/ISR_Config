@@ -1,0 +1,306 @@
+Building configuration...
+
+
+Current configuration : 8086 bytes
+!
+! Last configuration change at 18:39:00 UTC Thu Sep 18 2025
+! NVRAM config last updated at 18:45:36 UTC Thu Sep 18 2025
+!
+version 16.12
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service call-home
+platform qfp utilization monitor load 80
+platform punt-keepalive disable-kernel-core
+platform hardware throughput level boost
+!
+hostname ISR4351
+!
+boot-start-marker
+boot system flash bootflash:isr4300-universalk9.16.12.04.SPA.bin
+boot-end-marker
+!
+!
+vrf definition Mgmt-intf
+ !
+ address-family ipv4
+ exit-address-family
+ !
+ address-family ipv6
+ exit-address-family
+!
+!
+no aaa new-model
+call-home
+ ! If contact email address in call-home is configured as sch-smart-licensing@cisco.com
+ ! the email address configured in Cisco Smart License Portal will be used as contact email address to send SCH notifications.
+ contact-email-addr sch-smart-licensing@cisco.com
+ profile "CiscoTAC-1"
+  active
+  destination transport-method http
+  no destination transport-method email
+!
+no ip domain lookup
+ip domain name lab.home
+!
+!
+!
+login on-success log
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+!
+!
+!
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+crypto pki trustpoint TP-self-signed-1310253829
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-1310253829
+ revocation-check none
+ rsakeypair TP-self-signed-1310253829
+!
+crypto pki trustpoint SLA-TrustPoint
+ enrollment pkcs12
+ revocation-check crl
+!
+!
+crypto pki certificate chain TP-self-signed-1310253829
+ certificate self-signed 01
+  30820330 30820218 A0030201 02020101 300D0609 2A864886 F70D0101 05050030
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274
+  69666963 6174652D 31333130 32353338 3239301E 170D3231 30393039 31343437
+  34335A17 0D333030 31303130 30303030 305A3031 312F302D 06035504 03132649
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D31 33313032
+  35333832 39308201 22300D06 092A8648 86F70D01 01010500 0382010F 00308201
+  0A028201 0100BF21 2BD03017 D2909B8B 0B24DD9C 205C76A5 082DEE01 BF011DDF
+  0BBBBCC7 3412529B 04366CCB 37C9FA77 E78E3858 8D734A95 0E7D0571 B71BE93C
+  E1F3F420 DF5DB12B 757A74D3 792D3CFD 5CA3389B 8DCFE186 1F403F53 47BCAB79
+  CAF801E5 B3826B93 47238AB4 44CBB964 9E92928F 836A6D9E F2BF1B46 0F90B056
+  F0011A12 47311458 BADE11CA 2DB6D183 3D6F0FF5 6FDDC2C1 A0DA511B 7BB3F96B
+  88FDFDA3 CAA018D2 089322E3 E61D8190 845F4378 F04E3ADA 3BDD92B3 2E0C83B0
+  07336FB6 816CEE4D B995CB13 38841E0A 83C8A47E CC9954A8 9F543593 F275D9C9
+  366FAE02 7FF1CF54 E7D2E0EB F991F318 6CB7CAD5 D58F6301 6E215F1B 0F148487
+  E1971E59 00130203 010001A3 53305130 0F060355 1D130101 FF040530 030101FF
+  301F0603 551D2304 18301680 14C07B22 1BC71FDF D7C1F54B 1868274C 6E85633B
+  DB301D06 03551D0E 04160414 C07B221B C71FDFD7 C1F54B18 68274C6E 85633BDB
+  300D0609 2A864886 F70D0101 05050003 82010100 5BA6256C 06A810B1 2ABD1004
+  72E82FB6 F2B22BDD 06662A30 FEF54BE5 B8CA1BBA A6815C62 655935CA 51A98157
+  7A00E595 016A2EC6 577DE15C 44902AE5 6ADA5923 BFD61CCE 7F7E9340 F4423D27
+  53074180 58D05EEF 80AD8B8D D194D64D 16774CC1 7553F31C 3FE66659 50D19906
+  00FD43B4 08901BB9 0323B1CB 4C61226D AFDEF7B1 2D422BBE F683B077 0127172A
+  D68AB56E C3924DF6 99CEB968 605FA390 500B9A9F ACC1C14F B77DA774 E9CDF2D6
+  3E6E48DD F90B452B B8E7145D FDE6CF96 C7590650 B6548A75 8FF2CA59 1C64B181
+  B0088838 4627547F 69DAC9EA 0B62527A FFFD7406 BB856988 39CBD9F8 68146E07
+  926A2864 AB6B6D7F 563887B0 10AA034D 4A1B518F
+        quit
+crypto pki certificate chain SLA-TrustPoint
+ certificate ca 01
+  30820321 30820209 A0030201 02020101 300D0609 2A864886 F70D0101 0B050030
+  32310E30 0C060355 040A1305 43697363 6F312030 1E060355 04031317 43697363
+  6F204C69 63656E73 696E6720 526F6F74 20434130 1E170D31 33303533 30313934
+  3834375A 170D3338 30353330 31393438 34375A30 32310E30 0C060355 040A1305
+  43697363 6F312030 1E060355 04031317 43697363 6F204C69 63656E73 696E6720
+  526F6F74 20434130 82012230 0D06092A 864886F7 0D010101 05000382 010F0030
+  82010A02 82010100 A6BCBD96 131E05F7 145EA72C 2CD686E6 17222EA1 F1EFF64D
+  CBB4C798 212AA147 C655D8D7 9471380D 8711441E 1AAF071A 9CAE6388 8A38E520
+  1C394D78 462EF239 C659F715 B98C0A59 5BBB5CBD 0CFEBEA3 700A8BF7 D8F256EE
+  4AA4E80D DB6FD1C9 60B1FD18 FFC69C96 6FA68957 A2617DE7 104FDC5F EA2956AC
+  7390A3EB 2B5436AD C847A2C5 DAB553EB 69A9A535 58E9F3E3 C0BD23CF 58BD7188
+  68E69491 20F320E7 948E71D7 AE3BCC84 F10684C7 4BC8E00F 539BA42B 42C68BB7
+  C7479096 B4CB2D62 EA2F505D C7B062A4 6811D95B E8250FC4 5D5D5FB8 8F27D191
+  C55F0D76 61F9A4CD 3D992327 A8BB03BD 4E6D7069 7CBADF8B DF5F4368 95135E44
+  DFC7C6CF 04DD7FD1 02030100 01A34230 40300E06 03551D0F 0101FF04 04030201
+  06300F06 03551D13 0101FF04 05300301 01FF301D 0603551D 0E041604 1449DC85
+  4B3D31E5 1B3E6A17 606AF333 3D3B4C73 E8300D06 092A8648 86F70D01 010B0500
+  03820101 00507F24 D3932A66 86025D9F E838AE5C 6D4DF6B0 49631C78 240DA905
+  604EDCDE FF4FED2B 77FC460E CD636FDB DD44681E 3A5673AB 9093D3B1 6C9E3D8B
+  D98987BF E40CBD9E 1AECA0C2 2189BB5C 8FA85686 CD98B646 5575B146 8DFC66A8
+  467A3DF4 4D565700 6ADF0F0D CF835015 3C04FF7C 21E878AC 11BA9CD2 55A9232C
+  7CA7B7E6 C1AF74F6 152E99B7 B1FCF9BB E973DE7F 5BDDEB86 C71E3B49 1765308B
+  5FB0DA06 B92AFE7F 494E8A9E 07B85737 F3A58BE1 1A48A229 C37C1E69 39F08678
+  80DDCD16 D6BACECA EEBC7CF9 8428787B 35202CDC 60E4616A B623CDBD 230E3AFB
+  418616A9 4093E049 4D10AB75 27E86F73 932E35B5 8862FDAE 0275156F 719BB2F0
+  D697DF7F 28
+        quit
+!
+!
+no license feature hseck9
+license udi pid ISR4351/K9 sn FDO22122FPV
+license accept end user agreement
+license boot level securityk9
+license smart reservation
+memory free low-watermark processor 69096
+!
+diagnostic bootup level minimal
+!
+spanning-tree mode rapid-pvst
+spanning-tree portfast default
+spanning-tree extend system-id
+spanning-tree vlan 4,10,99 priority 24576
+!
+username daveweb password 0 daveweb123
+!
+redundancy
+ mode none
+!
+!
+!
+!
+!
+vlan internal allocation policy ascending
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Port-channel10
+ no ip address
+ no negotiation auto
+!
+interface GigabitEthernet0/0/0
+ no ip address
+ shutdown
+ negotiation auto
+!
+interface GigabitEthernet0/0/1
+ no ip address
+ shutdown
+ negotiation auto
+!
+interface GigabitEthernet0/0/2
+ no ip address
+ shutdown
+ negotiation auto
+!
+interface GigabitEthernet0/1/0
+ switchport trunk native vlan 4
+ switchport trunk allowed vlan 4,10,99
+ switchport mode trunk
+!
+interface GigabitEthernet0/1/1
+!
+interface GigabitEthernet0/1/2
+!
+interface GigabitEthernet0/1/3
+!
+interface GigabitEthernet0/1/4
+ switchport access vlan 4
+ switchport mode access
+!
+interface GigabitEthernet0/1/5
+ switchport access vlan 4
+ switchport mode access
+!
+interface GigabitEthernet0/1/6
+ switchport access vlan 4
+ switchport mode access
+!
+interface GigabitEthernet0/1/7
+ switchport access vlan 4
+ switchport mode access
+!
+interface GigabitEthernet0/2/0
+!
+interface GigabitEthernet0/2/1
+!
+interface GigabitEthernet0/2/2
+!
+interface GigabitEthernet0/2/3
+!
+interface GigabitEthernet0/2/4
+!
+interface GigabitEthernet0/2/5
+!
+interface GigabitEthernet0/2/6
+!
+interface GigabitEthernet0/2/7
+!
+interface GigabitEthernet0/3/0
+!
+interface GigabitEthernet0/3/1
+!
+interface GigabitEthernet0/3/2
+!
+interface GigabitEthernet0/3/3
+!
+interface GigabitEthernet0/3/4
+ switchport access vlan 99
+!
+interface GigabitEthernet0/3/5
+ switchport access vlan 666
+ shutdown
+!
+interface GigabitEthernet0/3/6
+ switchport access vlan 10
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet0/3/7
+ switchport access vlan 10
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet0
+ vrf forwarding Mgmt-intf
+ ip address 10.0.0.2 255.255.255.240
+ negotiation auto
+!
+interface Vlan1
+ no ip address
+!
+interface Vlan4
+ ip address 192.168.4.5 255.255.255.192
+!
+ip forward-protocol nd
+ip http server
+ip http authentication local
+ip http secure-server
+ip tftp source-interface GigabitEthernet0
+!
+!
+!
+!
+!
+!
+!
+control-plane
+!
+alias exec ship show ip inter br | exc unass
+!
+line con 0
+ logging synchronous
+ stopbits 1
+line aux 0
+ stopbits 1
+line vty 0 4
+ login
+ transport input ssh
+!
+ntp server 192.168.4.1
+!
+!
+!
+!
+!
+end
