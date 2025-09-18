@@ -1,10 +1,10 @@
 Building configuration...
 
 
-Current configuration : 8086 bytes
+Current configuration : 8482 bytes
 !
-! Last configuration change at 18:39:00 UTC Thu Sep 18 2025
-! NVRAM config last updated at 18:45:36 UTC Thu Sep 18 2025
+! Last configuration change at 19:22:49 UTC Thu Sep 18 2025
+! NVRAM config last updated at 19:22:50 UTC Thu Sep 18 2025
 !
 version 16.12
 service timestamps debug datetime msec
@@ -30,7 +30,22 @@ vrf definition Mgmt-intf
  exit-address-family
 !
 !
-no aaa new-model
+aaa new-model
+!
+!
+aaa authentication login CON none
+aaa authentication login REMOTE local
+aaa authorization console
+aaa authorization exec CON none
+aaa authorization exec REMOTE local
+aaa authorization network default local
+!
+!
+!
+!
+!
+!
+aaa session-id common
 call-home
  ! If contact email address in call-home is configured as sch-smart-licensing@cisco.com
  ! the email address configured in Cisco Smart License Portal will be used as contact email address to send SCH notifications.
@@ -149,6 +164,7 @@ spanning-tree extend system-id
 spanning-tree vlan 4,10,99 priority 24576
 !
 username daveweb password 0 daveweb123
+username dave privilege 15 secret 9 $9$kY/ZtTtPRbok/.$xhP4GVBqS/OdV6oF/yPe3EzYYNyQeAN957lchZZeEjI
 !
 redundancy
  mode none
@@ -284,6 +300,8 @@ ip tftp source-interface GigabitEthernet0
 !
 !
 !
+!
+!
 control-plane
 !
 alias exec ship show ip inter br | exc unass
@@ -294,8 +312,9 @@ line con 0
 line aux 0
  stopbits 1
 line vty 0 4
- login
- transport input ssh
+ authorization exec REMOTE
+ transport input telnet ssh
+ transport output none
 !
 ntp server 192.168.4.1
 !
